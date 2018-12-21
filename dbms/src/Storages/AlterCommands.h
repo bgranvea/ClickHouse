@@ -42,6 +42,15 @@ struct AlterCommand
     /// For MODIFY_PRIMARY_KEY
     ASTPtr primary_key;
 
+    /// For DROP_COLUMN, MODIFY_COLUMN, COMMENT_COLUMN
+    bool if_exists;
+
+    /// For ADD_COLUMN
+    bool if_not_exists;
+
+    /// indicates that this command should not be applied, for example in case of if_exists=true and column doesn't exist.
+    bool ignore = false;
+
     AlterCommand() = default;
     AlterCommand(const Type type, const String & column_name, const DataTypePtr & data_type,
                  const ColumnDefaultKind default_kind, const ASTPtr & default_expression,
